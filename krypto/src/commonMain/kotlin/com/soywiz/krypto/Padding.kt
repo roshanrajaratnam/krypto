@@ -16,7 +16,7 @@ enum class Padding {
             val result = ByteArray(data.size + paddingSize)
             arraycopy(data, 0, result, 0, data.size)
             return when (padding) {
-                NoPadding -> {
+                NoPadding, ZeroPadding -> {
                     result
                 }
                 PKCS7Padding -> {
@@ -33,9 +33,6 @@ enum class Padding {
                     val randomBytes = Random.nextBytes(paddingSize)
                     randomBytes[paddingSize - 1] = paddingSize.toByte()
                     arraycopy(randomBytes, 0, result, data.size, randomBytes.size)
-                    result
-                }
-                ZeroPadding -> {
                     result
                 }
             }
